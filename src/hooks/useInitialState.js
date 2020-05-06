@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useInitialState = (API) => {
   const [videos, setVideos] = useState({
+    'mySearch': [],
     'myList': [],
     'trends': [],
     'originals': [],

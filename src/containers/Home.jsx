@@ -9,11 +9,26 @@ import CarouselItem from '../components/CarouselItem';
 
 import '../assets/styles/App.scss';
 
-const Home = ({ myList, trends, originals }) => {
+const Home = ({ mySearch, myList, trends, originals }) => {
   return (
     <>
       <Header />
       <Search isHome />
+      {
+        mySearch.length > 0 && (
+          <Categories title='Búsqueda'>
+            <Carousel>
+              {mySearch.map((item) => (
+                <CarouselItem
+                  key={item.id}
+                  {...item}
+                  isList
+                />
+              ))}
+            </Carousel>
+          </Categories>
+        )
+      }
       {
         myList.length > 0 && (
           <Categories title='Mi lista'>
@@ -30,7 +45,7 @@ const Home = ({ myList, trends, originals }) => {
         )
       }
       {
-        trends.length > 0 && (
+        (trends.length > 0 && mySearch.length === 0) && (
           <Categories title='Tendencias'>
             <Carousel>
               {trends.map((item) => <CarouselItem key={item.id} {...item} />)}
@@ -39,7 +54,7 @@ const Home = ({ myList, trends, originals }) => {
         )
       }
       {
-        originals.length > 0 && (
+        (originals.length > 0 && mySearch.length === 0) && (
           <Categories title='Originales de Platzi Video'>
             <Carousel>
               {originals.map((item) => <CarouselItem key={item.id} {...item} />)}
@@ -53,6 +68,7 @@ const Home = ({ myList, trends, originals }) => {
 
 const mapStateToProps = (state) => {
   return {
+    mySearch: state.mySearch,
     myList: state.myList,
     trends: state.trends,
     originals: state.originals,
